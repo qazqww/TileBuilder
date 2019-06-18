@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ImageMng
 {
-    List<TileImg> tileImg = new List<TileImg>();
+    public List<TileImg> tileImg = new List<TileImg>();
 
     public void Load(string path)
     {
@@ -20,6 +20,8 @@ public class ImageMng
             texture.SetPixels(pixels);
             tile.texture = texture;
             tile.sprite = s;
+            texture.Apply();
+            tileImg.Add(tile);
             Debug.Log(tile.sprite);
         }
     }
