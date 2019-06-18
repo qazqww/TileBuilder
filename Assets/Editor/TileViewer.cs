@@ -21,7 +21,11 @@ public class TileViewer : MonoBehaviour
     public void Draw(int x, int y, int width, int height, int column)
     {        
         int rest = tileList.Count % column;
-        int rowCount = tileList.Count + (rest > 0 ? 1 : 0); 
+        int rowCount = tileList.Count + (rest > 0 ? 1 : 0);
+
+        GUIStyle labelStyle = new GUIStyle("Label");
+        labelStyle.alignment = TextAnchor.MiddleCenter;
+        labelStyle.fontSize = 8;
 
         GUILayout.BeginArea(new Rect(x, y, width, height), EditorStyles.textField);
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(width), GUILayout.Height(height));
@@ -34,7 +38,10 @@ public class TileViewer : MonoBehaviour
                 int index = i * column + j;
                 if (index < tileList.Count)
                 {
-                    bool state = GUILayout.Button(tileList[index].texture, GUILayout.Width(100), GUILayout.Height(100));
+                    GUILayout.BeginVertical();
+                    bool state = GUILayout.Button(tileList[index].texture, GUILayout.Width(150), GUILayout.Height(150));
+                    GUILayout.Label(tileList[index].name, labelStyle);
+                    GUILayout.EndVertical();
                     selTile = tileList[index];
                 }
                 else

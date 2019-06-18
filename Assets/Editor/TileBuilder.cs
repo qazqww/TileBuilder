@@ -32,7 +32,7 @@ public class TileBuilder : EditorWindow
 
     private void OnGUI()
     {
-        viewer.Draw(0, 0, 600, 400, 5);
+        viewer.Draw(0, 0, 800, 800, 5);
     }
 }
 

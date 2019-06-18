@@ -20,6 +20,7 @@ public class ImageMng
             texture.SetPixels(pixels);
             tile.texture = texture;
             tile.sprite = s;
+            tile.name = tile.sprite.name;
             texture.Apply();
             tileImg.Add(tile);
             Debug.Log(tile.sprite);

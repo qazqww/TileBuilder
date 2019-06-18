@@ -6,4 +6,5 @@ public class TileImg
 {
     public Sprite sprite;
     public Texture2D texture;
+    public string name;
 }
