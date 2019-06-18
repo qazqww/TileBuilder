@@ -7,7 +7,6 @@ public class TileBuilder : EditorWindow
 {
     ImageMng imageMng = new ImageMng();
     TileCursor cursor = new TileCursor();
-    TileViewer viewer = new TileViewer();
 
     void Start()
     {
@@ -31,7 +30,6 @@ public class TileBuilder : EditorWindow
 
     private void OnGUI()
     {
-        viewer.Draw(0, 0, 200, 200);
     }
 }
 
