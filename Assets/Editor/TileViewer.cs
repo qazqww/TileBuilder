@@ -31,9 +31,9 @@ public class TileViewer : MonoBehaviour
         int rowCount = tileList.Count + (remain > 0 ? 1 : 0);
 
         // GUIContent는 렌더링할 대상을 정의하고, (시각적인 매체를 추가할 수 있는듯)
-        // GUIStyle은 렌더링하는 방법을 정의한다. (양식, 수치 조절 등)
+        // GUIStyle은 렌더링하는 방법을 정의한다. (양식, 수치 조절 등)        
 
-        GUIStyle guiStyle = new GUIStyle("Label");
+        GUIStyle guiStyle = new GUIStyle(GUI.skin.button);
         guiStyle.imagePosition = ImagePosition.ImageAbove;
 
         GUILayout.BeginArea(new Rect(x, y, width, height), EditorStyles.textField);
@@ -49,7 +49,7 @@ public class TileViewer : MonoBehaviour
                 {
                     GUIContent guiContent = new GUIContent(tileList[index].texture.name, tileList[index].texture);
                     
-                    bool state = GUILayout.Button(guiContent, guiStyle, GUILayout.Width(150), GUILayout.Height(150));
+                    bool state = GUILayout.Button(guiContent, guiStyle, GUILayout.Width(100), GUILayout.Height(100));
                     if (state)
                         selTile = tileList[index];
                 }

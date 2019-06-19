@@ -11,21 +11,49 @@ public class TileBuilder : EditorWindow
     ImageMng imageMng = new ImageMng();
     TileCursor cursor = new TileCursor();
     TileViewer viewer = new TileViewer();
+    TileInfo info = new TileInfo();
+
+    SpriteRenderer tilePrefab;
 
     void Awake()
     {
-        imageMng.Load("TileImages");
-        viewer.SetTile(imageMng.tileImg);
+        tilePrefab = Resources.Load<SpriteRenderer>("Prefabs/TilePrefab");
+        imageMng.Load("TileImages");        
     }
     
     void Update()
     {
-        
+        if(cursor.IsClick)
+        {
+            //if (viewer == null || viewer.SelTile == null)
+            if (viewer.SelTile == null)
+                return;
+
+            SpriteRenderer sprite = Instantiate(tilePrefab, cursor.ClickPos, Quaternion.identity);
+            sprite.sprite = viewer.SelTile.sprite;
+            sprite.color = viewer.SelTile.color;
+            sprite.sortingOrder = viewer.SelTile.layerOrder;
+
+            switch (viewer.SelTile.colliderType)
+            {
+                case ColliderType.BoxCollider:
+                    if (sprite.GetComponent<BoxCollider2D>() != null)
+                        sprite.gameObject.AddComponent<BoxCollider2D>();
+                    break;
+                case ColliderType.CircleCollider:
+                    if (sprite.GetComponent<CircleCollider2D>() != null)
+                        sprite.gameObject.AddComponent<CircleCollider2D>();
+                    break;
+            }
+
+            cursor.SetClickState(false);
+        }
     }
 
     private void OnEnable()
     {
         cursor.SetShow(true);
+        viewer.SetTile(imageMng.tileImg);
     }
 
     private void OnDisable()
@@ -35,7 +63,8 @@ public class TileBuilder : EditorWindow
 
     private void OnGUI()
     {
-        viewer.Draw(0, 0, 800, 800, 5);
+        viewer.Draw(0, 0, 550, 600, 5);
+        info.Draw(560, 0, 200, 350, viewer.SelTile);
     }
 }
 
