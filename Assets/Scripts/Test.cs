@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Test : MonoBehaviour
-{    
-    private void OnEnable()
-    {
-    }
+{
+    public Texture icon;
 
-    private void OnDisable()
-    {
-    }
+    GUIStyle gUIStyle = new GUIStyle();
 
-    private void Update()
+    void OnGUI()
     {
-
+        gUIStyle.imagePosition = ImagePosition.ImageAbove;
+        GUI.Button(new Rect(500, 500, 200, 200), new GUIContent("text", icon, "tooltip"));
+        GUI.Button(new Rect(0, 0, 100, 100), new GUIContent("text", icon, "tooltip"));
     }
 }

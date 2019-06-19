@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Scene 뷰에서 타일 작업을 할 수 있도록 해줌
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;

@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// 실질적인 창에 해당하는 클래스
+// 창이 열리고 닫힘에 따라 여러 기능들이 작동하도록 설정
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
