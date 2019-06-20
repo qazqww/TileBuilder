@@ -21,16 +21,6 @@ public class TileCursor
         get { return isShow; }
     }
 
-    public void SetShow(bool state)
-    {
-        isShow = state;
-
-        if (state)
-            SceneView.onSceneGUIDelegate += OnSceneFunc;
-        else
-            SceneView.onSceneGUIDelegate -= OnSceneFunc;
-    }
-
     Vector3 clickPos = Vector3.zero;
     public Vector3 ClickPos
     {
@@ -41,6 +31,16 @@ public class TileCursor
     public bool IsClick
     {
         get { return clickState; }
+    }
+
+    public void SetShow(bool state)
+    {
+        isShow = state;
+
+        if (state)
+            SceneView.onSceneGUIDelegate += OnSceneFunc;
+        else
+            SceneView.onSceneGUIDelegate -= OnSceneFunc;
     }
 
     public void SetClickState (bool state)

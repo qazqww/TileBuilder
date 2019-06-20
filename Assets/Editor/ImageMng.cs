@@ -28,6 +28,23 @@ public class ImageMng
             //Debug.Log(tile.sprite);
         }
     }
+
+    // 파일명 비교를 통해 서브 키에 해당하는 이미지 리스트를 리턴
+    public TileImg[] GetTile(string key)
+    {
+        List<TileImg> tileList = new List<TileImg>();
+
+        for (int i=0; i<tileImg.Count; i++)
+        {
+            string imageName = tileImg[i].sprite.name.ToLower();
+            if (imageName.Contains(key.ToLower()))
+            {
+                tileList.Add(tileImg[i]);
+            }
+        }
+
+        return tileList.ToArray();
+    }
 }
 
 // Texture와 Sprite의 차이

@@ -10,50 +10,86 @@ public class TileBuilder : EditorWindow
 {
     ImageMng imageMng = new ImageMng();
     TileCursor cursor = new TileCursor();
-    TileViewer viewer = new TileViewer();
-    TileInfo info = new TileInfo();
+    TileViewer tileViewer = new TileViewer();
+    TileInfo tileInfo = new TileInfo();
+    TileBuilderTag tagBuilder = new TileBuilderTag();
+    InsertTag insertTag = new InsertTag();
 
     SpriteRenderer tilePrefab;
 
+    bool inputMainTag = false;
+
     void Awake()
     {
+        tagBuilder.AddTag("Tiles", "Cake");
+        tagBuilder.AddTag("Tiles", "Castle");
+        tagBuilder.AddTag("Tiles", "Choco");
+        tagBuilder.AddTag("Tiles", "Grass");
+        tagBuilder.AddTag("Tiles", "Ice");
+        tagBuilder.AddTag("Tiles", "Lava");
+        tagBuilder.AddTag("Tiles", "Sand");
+        tagBuilder.AddTag("Tiles", "Snow");
+        tagBuilder.AddTag("Tiles", "Stone");
+        tagBuilder.AddTag("Tiles", "Tundra");
+        tagBuilder.AddTag("Tiles", "Water");
+        
         tilePrefab = Resources.Load<SpriteRenderer>("Prefabs/TilePrefab");
-        imageMng.Load("TileImages");        
+        imageMng.Load("TileImages");
+
+        tagBuilder.SetMainTag("Tiles");
+        SettingTile();
     }
     
     void Update()
     {
-        if(cursor.IsClick)
+        if (tagBuilder.Changed)
         {
-            //if (viewer == null || viewer.SelTile == null)
-            if (viewer.SelTile == null)
+            SettingTile();
+        }
+
+        if (cursor.IsClick)
+        {
+            if (tileViewer == null || tileViewer.SelTile == null)
                 return;
 
             SpriteRenderer sprite = Instantiate(tilePrefab, cursor.ClickPos, Quaternion.identity);
-            sprite.sprite = viewer.SelTile.sprite;
-            sprite.color = viewer.SelTile.color;
-            sprite.sortingOrder = viewer.SelTile.layerOrder;
+            sprite.sprite = tileViewer.SelTile.sprite;
+            sprite.color = tileViewer.SelTile.color;
+            sprite.sortingOrder = tileViewer.SelTile.layerOrder;
 
-            switch (viewer.SelTile.colliderType)
+            switch (tileViewer.SelTile.colliderType)
             {
                 case ColliderType.BoxCollider:
-                    if (sprite.GetComponent<BoxCollider2D>() != null)
+                    if (sprite.GetComponent<BoxCollider2D>() == null)
                         sprite.gameObject.AddComponent<BoxCollider2D>();
                     break;
                 case ColliderType.CircleCollider:
-                    if (sprite.GetComponent<CircleCollider2D>() != null)
+                    if (sprite.GetComponent<CircleCollider2D>() == null)
                         sprite.gameObject.AddComponent<CircleCollider2D>();
                     break;
             }
 
             cursor.SetClickState(false);
         }
+
+        if(inputMainTag)
+        {
+            tagBuilder.AddTag(insertTag.MainTag, insertTag.SubTag);
+            inputMainTag = false;
+        }
+    }
+
+    public void SettingTile()
+    {
+        TileImg[] tileArr = imageMng.GetTile(tagBuilder.Tag);
+        tileViewer.SetTile(tileArr);
     }
 
     private void OnEnable()
     {
         cursor.SetShow(true);
-        viewer.SetTile(imageMng.tileImg);
+        SettingTile();
+        //tileViewer.SetTile(imageMng.tileImg);
     }
 
     private void OnDisable()
@@ -63,8 +99,10 @@ public class TileBuilder : EditorWindow
 
     private void OnGUI()
     {
-        viewer.Draw(0, 0, 550, 600, 5);
-        info.Draw(560, 0, 200, 350, viewer.SelTile);
+        tagBuilder.Draw(0, 0, 550, 40);
+        tileViewer.Draw(0, 40, 550, 600, 5);
+        tileInfo.Draw(560, 50, 200, 350, tileViewer.SelTile);
+        insertTag.Draw(560, 0, 200, 40, ref inputMainTag);
     }
 }
 

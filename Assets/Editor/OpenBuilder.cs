@@ -13,6 +13,6 @@ public static class OpenBuilder
     public static void OpenMenu()
     {
         TileBuilder builder = (TileBuilder)EditorWindow.GetWindow(typeof(TileBuilder));
-        builder.minSize = new Vector2(800, 800);
+        builder.minSize = new Vector2(600, 600);
     }
 }

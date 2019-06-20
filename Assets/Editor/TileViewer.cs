@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class TileViewer : MonoBehaviour
+public class TileViewer
 {
     List<TileImg> tileList = new List<TileImg>();
     Vector2 scrollPosition = Vector2.zero;
@@ -20,8 +20,15 @@ public class TileViewer : MonoBehaviour
     {
         tileList.Clear();
         foreach(TileImg i in tileImg)
-        {
             tileList.Add(i);
+    }
+
+    public void SetTile(TileImg[] tileImg)
+    {
+        if (tileImg != null)
+        {
+            tileList.Clear();
+            tileList.AddRange(tileImg);
         }
     }
 
@@ -30,7 +37,7 @@ public class TileViewer : MonoBehaviour
         int remain = tileList.Count % column;
         int rowCount = tileList.Count + (remain > 0 ? 1 : 0);
 
-        // GUIContent는 렌더링할 대상을 정의하고, (시각적인 매체를 추가할 수 있는듯)
+        // GUIContent는 렌더링할 대상을 정의하고, (시각적인 매체를 추가하는 개념인듯)
         // GUIStyle은 렌더링하는 방법을 정의한다. (양식, 수치 조절 등)        
 
         GUIStyle guiStyle = new GUIStyle(GUI.skin.button);
