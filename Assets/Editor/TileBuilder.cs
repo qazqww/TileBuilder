@@ -21,18 +21,24 @@ public class TileBuilder : EditorWindow
 
     void Awake()
     {
-        tagBuilder.AddTag("Tiles", "Cake");
-        tagBuilder.AddTag("Tiles", "Castle");
-        tagBuilder.AddTag("Tiles", "Choco");
-        tagBuilder.AddTag("Tiles", "Grass");
-        tagBuilder.AddTag("Tiles", "Ice");
-        tagBuilder.AddTag("Tiles", "Lava");
-        tagBuilder.AddTag("Tiles", "Sand");
-        tagBuilder.AddTag("Tiles", "Snow");
-        tagBuilder.AddTag("Tiles", "Stone");
-        tagBuilder.AddTag("Tiles", "Tundra");
-        tagBuilder.AddTag("Tiles", "Water");
+        string path = Application.dataPath + "/Resources/TagData/";
+
+        //tagBuilder.AddTag("Tiles", "Cake");
+        //tagBuilder.AddTag("Tiles", "Castle");
+        //tagBuilder.AddTag("Tiles", "Choco");
+        //tagBuilder.AddTag("Tiles", "Grass");
+        //tagBuilder.AddTag("Tiles", "Ice");
+        //tagBuilder.AddTag("Tiles", "Lava");
+        //tagBuilder.AddTag("Tiles", "Sand");
+        //tagBuilder.AddTag("Tiles", "Snow");
+        //tagBuilder.AddTag("Tiles", "Stone");
+        //tagBuilder.AddTag("Tiles", "Tundra");
+        //tagBuilder.AddTag("Tiles", "Water");
         
+        // 저장할 때만 확장자 필요
+        //tagBuilder.SaveTag(path, "Tag.txt");
+        tagBuilder.LoadTag("TagData/Tag");
+
         tilePrefab = Resources.Load<SpriteRenderer>("Prefabs/TilePrefab");
         imageMng.Load("TileImages");
 
@@ -82,7 +88,8 @@ public class TileBuilder : EditorWindow
     public void SettingTile()
     {
         TileImg[] tileArr = imageMng.GetTile(tagBuilder.Tag);
-        tileViewer.SetTile(tileArr);
+        if(tileArr != null)
+            tileViewer.SetTile(tileArr);
     }
 
     private void OnEnable()

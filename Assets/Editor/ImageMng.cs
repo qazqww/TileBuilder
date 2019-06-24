@@ -32,6 +32,9 @@ public class ImageMng
     // 파일명 비교를 통해 서브 키에 해당하는 이미지 리스트를 리턴
     public TileImg[] GetTile(string key)
     {
+        if (string.IsNullOrEmpty(key))
+            return null;
+
         List<TileImg> tileList = new List<TileImg>();
 
         for (int i=0; i<tileImg.Count; i++)

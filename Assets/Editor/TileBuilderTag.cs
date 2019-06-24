@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 
@@ -83,5 +84,61 @@ public class TileBuilderTag
     public void SetMainTag(string tag)
     {
         mainTag = tag;
+    }
+    
+    public void SaveTag(string path, string filename)
+    {
+        if(string.IsNullOrEmpty(path) || tagDic.Count == 0)
+            return;
+
+        if(!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        if (File.Exists(path))
+            File.Delete(path);
+
+        string savepath = path + filename;
+        File.Create(savepath).Close();
+        TextWriter writer = new StreamWriter(savepath); // TextWriter는 추상 클래스, StreamWriter는 TextWriter를 상속받음
+
+
+        foreach(var pair in tagDic)
+        {
+            string mainKey = pair.Key + "|";
+            string strSubString = string.Empty;
+            foreach (var subKey in pair.Value)
+            {
+                strSubString += (subKey + ",");
+            }
+            mainKey += strSubString;
+            mainKey = mainKey.Remove(mainKey.Length - 1);
+            writer.WriteLine(mainKey);
+        }
+
+        writer.Close();
+    }
+
+    public void LoadTag(string path)
+    {
+        tagDic.Clear();
+
+        TextAsset textAsset = Resources.Load<TextAsset>(path);
+        if (textAsset != null)
+            return;
+
+        char[] removeCh = { '\r', '\n' };
+
+        string[] row = textAsset.text.Split(removeCh, System.StringSplitOptions.RemoveEmptyEntries); // 비어있는 요소를 배제하는 옵션
+        for (int i = 0; i < row.Length; i++)
+        {
+            string[] col = row[i].Split('|');
+            string mainKey = col[0];
+            if(col.Length > 1)
+            {
+                string[] subKey = col[1].Split(',');
+                for (int j = 0; j < subKey.Length; j++)
+                    AddTag(mainTag, subKey[j]);
+            }
+        }
     }
 }

@@ -34,7 +34,7 @@ public class InsertTag
             GUILayout.EndHorizontal();
         GUILayout.EndVertical();
 
-        if (GUILayout.Button("ADD", GUILayout.Width(40), GUILayout.Height(30)))
+        if (GUILayout.Button("ADD", GUILayout.Width(40), GUILayout.Height(35)))
             mainState = true;
         GUILayout.EndHorizontal();
 
