@@ -88,7 +88,9 @@ public class TileBuilderTag
     
     public void SaveTag(string path, string filename)
     {
-        if(string.IsNullOrEmpty(path) || tagDic.Count == 0)
+        AssetDatabase.Refresh();
+
+        if (string.IsNullOrEmpty(path) || tagDic.Count == 0)
             return;
 
         if(!Directory.Exists(path))
@@ -120,6 +122,7 @@ public class TileBuilderTag
 
     public void LoadTag(string path)
     {
+        AssetDatabase.Refresh();
         tagDic.Clear();
 
         TextAsset textAsset = Resources.Load<TextAsset>(path);

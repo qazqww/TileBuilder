@@ -19,9 +19,25 @@ public class TileBuilder : EditorWindow
 
     bool inputMainTag = false;
 
+    string path;
+    public string Path
+    {
+        get { return Application.dataPath + "/Resources/TagData/"; }
+    }
+
+    string TagName
+    {
+        get { return "Tag.txt"; }
+    }
+
+    string LoadPath
+    {
+        get { return "TagData/Tag"; }
+    }
+
     void Awake()
     {
-        string path = Application.dataPath + "/Resources/TagData/";
+        path = Path;
 
         //tagBuilder.AddTag("Tiles", "Cake");
         //tagBuilder.AddTag("Tiles", "Castle");
@@ -37,7 +53,7 @@ public class TileBuilder : EditorWindow
         
         // 저장할 때만 확장자 필요
         //tagBuilder.SaveTag(path, "Tag.txt");
-        tagBuilder.LoadTag("TagData/Tag");
+        tagBuilder.LoadTag(LoadPath);
 
         tilePrefab = Resources.Load<SpriteRenderer>("Prefabs/TilePrefab");
         imageMng.Load("TileImages");
@@ -83,6 +99,12 @@ public class TileBuilder : EditorWindow
             tagBuilder.AddTag(insertTag.MainTag, insertTag.SubTag);
             inputMainTag = false;
         }
+
+        if(insertTag.Load)
+            tagBuilder.LoadTag(LoadPath);
+
+        if (insertTag.Save)
+            tagBuilder.SaveTag(path, TagName);
     }
 
     public void SettingTile()
@@ -108,8 +130,8 @@ public class TileBuilder : EditorWindow
     {
         tagBuilder.Draw(0, 0, 550, 40);
         tileViewer.Draw(0, 40, 550, 600, 5);
-        tileInfo.Draw(560, 50, 200, 350, tileViewer.SelTile);
-        insertTag.Draw(560, 0, 200, 40, ref inputMainTag);
+        tileInfo.Draw(560, 70, 200, 350, tileViewer.SelTile);
+        insertTag.Draw(560, 00, 200, 65, ref inputMainTag);
     }
 }
 

@@ -17,6 +17,25 @@ public class InsertTag
         get { return subTag; }
     }
 
+    bool save = false;
+    public bool Save
+    {
+        get { return Trigger(ref save); }
+    }
+
+    bool load = false;
+    public bool Load
+    {
+        get { return Trigger(ref load); }
+    }
+
+    bool Trigger(ref bool trigger)
+    {
+        bool state = trigger;
+        trigger = false;
+        return state;
+    }
+
     public void Draw(int x, int y, int width, int height, ref bool mainState)
     {
         GUILayout.BeginArea(new Rect(x, y, width, height), EditorStyles.textField);
@@ -36,6 +55,13 @@ public class InsertTag
 
         if (GUILayout.Button("ADD", GUILayout.Width(40), GUILayout.Height(35)))
             mainState = true;
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("SAVE"))
+            save = true;
+        if (GUILayout.Button("LOAD"))
+            load = true;
         GUILayout.EndHorizontal();
 
         GUILayout.EndArea();
